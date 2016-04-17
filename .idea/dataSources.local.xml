@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - @localhost" uuid="eb8a328e-5719-459a-8fea-0873f7416bf5">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>roadnetwork.*</schema-pattern>
+      <default-schemas>animalform.* roadnetwork.*</default-schemas>
+    </data-source>
+  </component>
+</project>
