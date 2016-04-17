@@ -1,10 +1,10 @@
 <?php
-$q = $_GET["q"];
-//echo "$q";
+$q = intval($_GET['q']);
+echo "$q";
 echo "<div>";
 echo "<table>";
 
-echo "<tr id=\"mtr\"><th id=\"mth\">Row</th><th id=\"mth\">RoadName</th><th id=\"mth\">Current SpeedLimit</th></tr>";
+echo "<tr><th>Id</th><th>Firstname</th><th>Lastname</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
     function __construct($it) {
@@ -12,11 +12,11 @@ class TableRows extends RecursiveIteratorIterator {
     }
 
     function current() {
-        return "<td id=\"mtd\">" . parent::current(). "</td>";
+        return "<td>" . parent::current(). "</td>";
     }
 
     function beginChildren() {
-        echo "<tr id=\"mtr\">";
+        echo "<tr>";
     }
 
     function endChildren() {
@@ -32,13 +32,16 @@ $dbname = "roadnetwork";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT * FROM $q");
+    $stmt = $conn->prepare("SELECT * FROM galway");
     $stmt->execute();
+
     // set the resulting array to associative
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
         echo $v;
+
     }
+
 }
 catch(PDOException $e) {
     echo "Error: " . $e->getMessage();

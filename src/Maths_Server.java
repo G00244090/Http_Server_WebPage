@@ -21,57 +21,57 @@ public class Maths_Server extends HttpServlet
         System.out.println(""+inputString);
         // Example input: { "amount": 100000, "rate": 5.5, "months": 360 };
         // Example String: String inputString = "{ \"amount\": 100000, \"rate\": 5.5, \"months\": 360 }";
-        int num1 =0;
-        int num2 =0;
-        int num3 =0;
-        int num4 =0;
-        int num5 =0;
+        String num1;
+        String num2 ;
+        String num3;
+        String num4 ;
+        String num5 ;
         int max =0;
         int min =0;
         int sum =0;
         String Sum = null;
         String Max = null;
         String Min = null;
-        int []array =new int[5];
+        String []array =new String[5];
         try {
             System.out.println("GETting this far");
 
             JSONObject inputValues = new JSONObject(inputString);
             System.out.println("GETting this far too  ");
 
-            num1 = inputValues.getInt("num1");
+            num1 = inputValues.getString("num1");
             System.out.println(""+num1);
             array[0]=num1;
             System.out.println("arr 0:"+array[0]);
 
-            num2 = inputValues.getInt("num2");
+            num2 = inputValues.getString("num2");
             System.out.println(""+num2);
             array[1]=num2;
             System.out.println("arr 1:"+array[1]);
 
-            num3 = inputValues.getInt("num3");
+            num3 = inputValues.getString("num3");
             System.out.println(""+num3);
             array[2]=num3;
             System.out.println("arr 2:"+array[2]);
 
-            num4 = inputValues.getInt("num4");
+            num4 = inputValues.getString("num4");
             System.out.println(""+num4);
             array[3]=num4;
             System.out.println("arr 3:"+array[3]);
 
-            num5 = inputValues.getInt("num5");
-            System.out.println(""+num5);
-            array[4]=num5;
-            System.out.println("arr 4:"+array[4]);
+//            num5 = inputValues.getString("num5");
+//            System.out.println(""+num5);
+//            array[4]=num5;
+//            System.out.println("arr 4:"+array[4]);
 
             Arrays.sort(array);
 
-            min=array[0];
-            max=array[array.length-1];
-//            for(int i=0;i<array.length-1;i++)
-//            {
-                sum=array[0]+array[1]+array[2]+array[3]+array[4];
-//            }
+//            min=array[0];
+//            max=array[array.length-1];
+////            for(int i=0;i<array.length-1;i++)
+////            {
+//                sum=array[0]+array[1]+array[2]+array[3]+array[4];
+////            }
             Sum=(""+(sum));
             System.out.println("Sum:"+(sum));
 
