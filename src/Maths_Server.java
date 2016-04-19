@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
+import java.sql.*;
 
 @WebServlet("/maths-server")
 public class Maths_Server extends HttpServlet
@@ -26,12 +26,14 @@ public class Maths_Server extends HttpServlet
         String num3;
         String num4 ;
         String num5 ;
+
         int max =0;
         int min =0;
         int sum =0;
         String Sum = null;
         String Max = null;
         String Min = null;
+        StringBuffer results = null;
         String []array =new String[5];
         try {
             System.out.println("GETting this far");
@@ -54,42 +56,49 @@ public class Maths_Server extends HttpServlet
             array[2]=num3;
             System.out.println("arr 2:"+array[2]);
 
-            num4 = inputValues.getString("num4");
-            System.out.println(""+num4);
-            array[3]=num4;
-            System.out.println("arr 3:"+array[3]);
+//            num4 = inputValues.getString("num4");
+//            System.out.println(""+num4);
+//            array[3]=num4;
+//            System.out.println("arr 3:"+array[3]);
 
-//            num5 = inputValues.getString("num5");
-//            System.out.println(""+num5);
-//            array[4]=num5;
-//            System.out.println("arr 4:"+array[4]);
+            String driver = "com.mysql.jdbc.Driver";
 
-            Arrays.sort(array);
+            System.out.println("in here");
+            Class.forName(driver);
+            String url = "jdbc:mysql://localhost:3306/roadnetwork"; //Database name here
+            Connection mon_connect = DriverManager.getConnection(url, "root", "root");  //URL, user and password
 
-//            min=array[0];
-//            max=array[array.length-1];
-////            for(int i=0;i<array.length-1;i++)
-////            {
-//                sum=array[0]+array[1]+array[2]+array[3]+array[4];
-////            }
-            Sum=(""+(sum));
-            System.out.println("Sum:"+(sum));
+            PreparedStatement send_data = mon_connect.prepareStatement("SELECT * FROM "+array[0].toString()+" WHERE RoadName='"+array[2].toString()+"';");
+            //send_data.setString(1, limit);
+           // send_data.setString(2, Selected_Type_TextArea.getSelectedValue().toString());
+            ResultSet catch_return = send_data.executeQuery();
+            // process query results
+             results = new StringBuffer();
+            ResultSetMetaData metaData = catch_return.getMetaData();
+            int numberOfColumns = metaData.getColumnCount();
 
-            Max = (""+(max));
-            System.out.println("Max: "+(max));
-            Min = (""+(min));
-            System.out.println("Min: "+(min));
-
+            for (int i = 2; i <= numberOfColumns; i++) {
+                results.append(metaData.getColumnName(i)+ " ");
+            }
+           // results.append("\n");
+            while (catch_return.next()) {
+                for (int i = 2; i <= numberOfColumns; i++) {
+                    results.append(catch_return.getObject(i)+ " ");
+                }
+            }
+            System.out.println("Results: "+results);
 
         } catch (Exception e) {  // NullPointerException and JSONException
             // Use default values assigned before the try block
         }
+
         //PaymentInfo info = new PaymentInfo(num1, num2, num3);
         JSONObject info = new JSONObject();
+        System.out.println("now sending\n"+ results);
         try {
-            info.put("Sum",Sum);
-            info.put("Max",Max);
-            info.put("Min",Min);
+            info.put("Sum",results);
+            //info.put("Max",Max);
+            //info.put("Min",Min);
         } catch (JSONException e) {
             e.printStackTrace();
         }
