@@ -62,8 +62,9 @@ echo"</table>";
             xmlhttp.open("GET","getusers.php?q="+str,true);
             // document.write("in the function");
             xmlhttp.send();
+
         }
-    }
+    }setTimeout(executeQuery, 5000);
 </script>
 
 <!--<div id="googleMap" style="width:1000px;height:600px;display=inline-block;" ></div>-->

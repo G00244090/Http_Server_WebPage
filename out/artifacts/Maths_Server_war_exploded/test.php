@@ -62,6 +62,7 @@ echo"</table>";
             xmlhttp.open("GET","getusers.php?q="+str,true);
             // document.write("in the function");
             xmlhttp.send();
+
         }
     }
 </script>
